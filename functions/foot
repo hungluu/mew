@@ -1,8 +1,8 @@
 # Update
 function update {
 	local url="https://raw.githubusercontent.com/madle/mew/master/release/mew"
-	curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" $0 && write "This script has been updated."
-	rm -f "tib-latest"
+	sudo curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" $0 && sudo chmod +x $0 && write "This script has been updated."
+	sudo rm -f "tib-latest"
 }
 #=========================================
 # Intro
@@ -34,14 +34,14 @@ function service_apply {
 	if array.exists supported[@] $action; then
 	case "$action" in
 		"")
-			if service.exists $name; then
+			if exists $name; then
 				write "service:${name} is installed."
 			else
 				write "service:${name} is not installed."
 			fi
 		;;
 		"running")
-			if service.running $name; then
+			if running $name; then
 				write "service:${name} is running"
 					else
 						write "service:${name} is not running"

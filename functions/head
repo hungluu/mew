@@ -81,13 +81,13 @@ function function_exists {
 # Service existence
 # @param $name
 function exists {
-	service --status-all 2>/dev/null | grep $1* >/dev/null
+	sudo service --status-all 2>/dev/null | grep $1* >/dev/null
 }
 #-----------------------
 # Service running
 # @param $name
 function running {
-	pgrep $1 >/dev/null
+	sudo pgrep $1 >/dev/null
 }
 #---------------------
 # Check if element exists in array
