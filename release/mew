@@ -122,6 +122,7 @@ function array_regexp {
 function mew {
 	drawline "-"
 	writeline
+	writeline
 	write " \ (.=^ ェ^=) / Hello " | align center
 	writeline
 	write "I am a silly cat ..." | align center
