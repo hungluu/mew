@@ -118,7 +118,7 @@ function array_regexp {
 	return 1
 } 
 # mew mew mew
-function meow {
+function mew {
 	drawtext "-"
 	write " \ (.=^ ェ^=) / Hello " | align center
 	writeline
