@@ -11,7 +11,7 @@ function about {
 	write " @author : Madle" | align center
 	write " @copyright : Madle (c) 2015" | align center
 	write " @copyright : TitanBox (c) 2015" | align center
-	write " @referrence : https://github.com/madle/mew" | align center
+	write " @url : https://github.com/madle/mew" | align center
 	drawline "-"
 	write " Thank you for using my software" | align center
 }
