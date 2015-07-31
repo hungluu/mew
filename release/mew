@@ -1,5 +1,5 @@
 #!/bin/bash
-SERVICES=() 
+SERVICES=()
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
 	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
@@ -117,7 +117,7 @@ function array_regexp {
 		fi
 	done
 	return 1
-} 
+}
 # mew mew mew
 function meow {
 	drawline "-"
@@ -227,4 +227,4 @@ function main {
 }
 
 main "$@"
-writeline 
+writeline
