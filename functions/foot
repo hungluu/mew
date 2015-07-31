@@ -20,7 +20,7 @@ function mew {
 # Update
 function update {
 	local url="https://raw.githubusercontent.com/madle/mew/master/release/mew"
-	curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" "$0" && sudo chmod +x "$0" && writeline "This script has been updated."
+	curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" $0 && sudo chmod +x $0 && writeline "This script has been updated."
 	sudo rm -f "tib-latest"
 }
 #=========================================
