@@ -18,14 +18,14 @@ bash mew update
 bash mew apache2
 ```
 
-- Uninstall server
+- Uninstall a service
 ```
 bash mew apache2 remove
 ```
 
 - Get os name
 ```
-bash mew os nam
+bash mew os name
 ```
 
 - About
