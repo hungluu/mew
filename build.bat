@@ -1,6 +1,7 @@
 @echo off
 SET modulelist=functions
 SET release=release\mew
+:: Detect if module directory exists
 if not exist %modulelist% goto nodir
 type nul > %release%
 for /f %%a in (tib-list) do (
@@ -10,8 +11,9 @@ for /f %%a in (tib-list) do (
 	)
 
 	echo COPYING MODULE %%a TO RELEASE FILE
+	:: Copy module file to final release
 	type %modulelist%\%%a >> %release%
-	;Add end of line
+	:: Add end of line
 	echo. >> %release%
 )
 goto success
