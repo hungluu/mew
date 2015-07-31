@@ -1,0 +1,119 @@
+#!/bin/bash
+SERVICES=()
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+	SOURCE="$(readlink "$SOURCE")"
+	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+# Write text
+# @param text
+function write {
+	printf $"$1"
+}
+#------------------
+# Write text within a line
+# @param text
+function writeline {
+	printf $"$1\n"
+}
+#-----------------------
+# Draw a horizontal line
+# @param symbol | text length should be 1
+function drawline {
+	printf '%*s' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "${1}"
+}
+#-----------------------
+# Draw a line of text on screen
+# @param text to be drawn
+# @param distance from left screen
+function drawtext {
+	printf '%*s' "${COLUMNS:-$2}" ' '
+	write "${1}"
+}
+#------------------------
+# Align text
+# @param alignment - left, right, center, ..
+function align {
+	read text
+	local distance=${#text}
+	local maxlength=$(tput cols)
+	case "${1}" in
+	left)
+		let distance=0
+	;;
+	right)
+		let distance=$((maxlength-distance))
+	;;
+	center)
+		let maxlength=$((maxlength/2))
+		let distance=$((distance/2))
+		let distance=$((maxlength-distance))
+	;;
+	*)
+		return
+	;;
+	esac;
+	drawtext "${text}\n" $distance
+}
+#------------------------
+# Write title
+# @param text
+function writetitle {
+	writeline
+	drawline "="
+	write "${1^^}" | align center
+	drawline "="
+}
+#----------------
+# Current path
+function path {
+	write "$( cd "$( dirname "$0" )" pwd )"
+}
+#-----------------------
+# Check function existence
+# @param $name
+function function_exists {
+	type -t $1 | grep "function" >/dev/null
+}
+#-----------------------
+# Service existence
+# @param $name
+function exists {
+	service --status-all 2>/dev/null | grep $1* >/dev/null
+}
+#-----------------------
+# Service running
+# @param $name
+function running {
+	pgrep $1 >/dev/null
+}
+#---------------------
+# Check if element exists in array
+# @param $haystack[@]
+# @param $needle
+function array_exists {
+	declare -a haystack=("${!1}")
+	local needle=${2}
+	for i in "${haystack[@]}"; do
+		if [ "$i" = "$needle" ]; then
+			return 0
+		fi
+	done
+	return 1
+}
+#--------------------
+# Check if string match all regexp in array
+# @param $regexp[@]
+# @param $string
+function array_regexp {
+	declare -a haystack=("${!1}")
+	local needle=${2}
+	for i in "${haystack[@]}"; do
+		if [[ ${needle} =~ ${i} ]]; then
+			return 0
+		fi
+	done
+	return 1
+}

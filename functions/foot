@@ -1,0 +1,22 @@
+#=========================================
+# INIT ARGUMENTS AND RUN PROGRAMS
+#=========================================
+function main {
+	program="$1"
+	service="$1"
+	action="$2"
+	for pragment in ${@:2}; do
+		program+=".$pragment"
+	done
+
+	if function_exists $program; then
+		$program
+	elif array_exists SERVICES[@] $service; then
+		service_apply $service $action
+	else
+		write "MODULE NOT FOUND."
+	fi
+}
+
+main $@
+writeline
