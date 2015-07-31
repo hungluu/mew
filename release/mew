@@ -1,5 +1,6 @@
 #!/bin/bash
-SERVICES=()SOURCE="${BASH_SOURCE[0]}"
+SERVICES=() 
+SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
 	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 	SOURCE="$(readlink "$SOURCE")"
@@ -115,10 +116,11 @@ function array_regexp {
 		fi
 	done
 	return 1
-}# Update
+} 
+# Update
 function update {
 	local url="https://raw.githubusercontent.com/madle/mew/master/release/mew"
-	sudo curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" $0 && sudo chmod +x $0 && write "This script has been updated."
+	sudo curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" $0 && sudo chmod +x $0 && writeline "This script has been updated."
 	sudo rm -f "tib-latest"
 }
 #=========================================
@@ -202,4 +204,4 @@ function main {
 }
 
 main $@
-writeline
+writeline 

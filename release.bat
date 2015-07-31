@@ -11,6 +11,7 @@ for /f %%a in (tib-list) do (
 
 	echo COPYING MODULE %%a TO RELEASE FILE
 	type %modulelist%\%%a >> %release%
+	echo. >> %release%
 )
 goto success
 :success
