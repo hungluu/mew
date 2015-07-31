@@ -1,6 +1,6 @@
 # mew mew mew
 function mew {
-	drawtext "-"
+	drawline "-"
 	write " \ (.=^ ェ^=) / Hello " | align center
 	writeline
 	write "I am a silly cat ..." | align center
@@ -10,9 +10,10 @@ function mew {
 	write "..." | align center
 	writeline
 	write "Never mind, just give me a hug (>w<)" | align center
-	drawtext "-"
+	writeline
+	drawline "-"
 	write "'Software is like sex: it's better when it's free' - Linus Torvalds"
-	drawtext "-"
+	drawline "-"
 }
 
 # Update
