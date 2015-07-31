@@ -1,3 +1,69 @@
+# Update
+function update {
+	local url="https://raw.githubusercontent.com/madle/mew/master/release/mew"
+	curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" $0 && write "This script has been updated."
+	rm -f "tib-latest"
+}
+#=========================================
+# Intro
+function about {
+	writetitle "MADLE EASY WEB SERVER DEPLOYMENT"
+	write " @author : Madle" | align center
+	write " @copyright : Madle (c) 2015" | align center
+	write " @copyright : TitanBox (c) 2015" | align center
+	write " @referrence : https://github.com/madle/mew" | align center
+	drawline "-"
+	write " Thank you for using my software" | align center
+}
+#=========================================
+function service_apply {
+	local name="$1"
+	local action="$2"
+	local supported=(
+		""
+		"start"
+		"stop"
+		"restart"
+		"running"
+	)
+	# try to get realname with defined methods
+	local realname="${name}"".name"
+	if function.exists $realname; then
+		name="$( ${realname} )"
+	fi
+	if array.exists supported[@] $action; then
+	case "$action" in
+		"")
+			if service.exists $name; then
+				write "service:${name} is installed."
+			else
+				write "service:${name} is not installed."
+			fi
+		;;
+		"running")
+			if service.running $name; then
+				write "service:${name} is running"
+					else
+						write "service:${name} is not running"
+			fi
+		;;
+		"version")
+			local version="${name}"".version"
+			function.exists $version && version="$( ${version} )" && write "service:${name} version is ${version}." || write "Can't get service:${name} version."
+		;;
+		"name")
+			write "${name}"
+		;;
+		*)
+			write "service:${name} is ${action}ing"
+			service "$name" "$action" >/dev/null
+		;;
+	esac;
+	else
+		write "Action:${action} is not allowed."
+	fi
+}
+
 #=========================================
 # INIT ARGUMENTS AND RUN PROGRAMS
 #=========================================
