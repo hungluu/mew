@@ -36,9 +36,10 @@ function drawtext {
 # Align text
 # @param alignment - left, right, center, ..
 function align {
-	read text
+	read -r text
 	local distance=${#text}
-	local maxlength=$(tput cols)
+	local maxlength
+	maxlength="$(tput cols)"
 	case "${1}" in
 	left)
 		let distance=0
@@ -69,25 +70,25 @@ function writetitle {
 #----------------
 # Current path
 function path {
-	write "$( cd "$( dirname "$0" )" pwd )"
+	write "$( cd "$( dirname "$0" )" pwd || nul )"
 }
 #-----------------------
 # Check function existence
 # @param $name
 function function_exists {
-	type -t $1 | grep "function" >/dev/null
+	type -t "$1" | grep "function" >/dev/null
 }
 #-----------------------
 # Service existence
 # @param $name
 function exists {
-	sudo service --status-all 2>/dev/null | grep $1* >/dev/null
+	sudo service --status-all 2>/dev/null | grep "$1*" >/dev/null
 }
 #-----------------------
 # Service running
 # @param $name
 function running {
-	sudo pgrep $1 >/dev/null
+	sudo pgrep "$1" >/dev/null
 }
 #---------------------
 # Check if element exists in array
@@ -131,14 +132,14 @@ function meow {
 	write "Never mind, just give me a hug (>w<)" | align center
 	writeline
 	drawline "-"
-	write "'Software is like sex: it's better when it's free' - Linus Torvalds"
+	write "'Software is like sex: it's better when it's free' - Linus Torvalds" | align center
 	drawline "-"
 }
 
 # Update
 function update {
 	local url="https://raw.githubusercontent.com/madle/mew/master/release/mew"
-	sudo curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" $0 && sudo chmod +x $0 && writeline "This script has been updated."
+	curl "$url" 2>/dev/null > "mew-latest" && cp "mew-latest" "$0" && sudo chmod +x "$0" && writeline "This script has been updated."
 	sudo rm -f "tib-latest"
 }
 #=========================================
@@ -165,20 +166,20 @@ function service_apply {
 	)
 	# try to get realname with defined methods
 	local realname="${name}"".name"
-	if function.exists $realname; then
+	if function_exists "$realname"; then
 		name="$( ${realname} )"
 	fi
-	if array.exists supported[@] $action; then
+	if array_exists supported[@] "$action"; then
 	case "$action" in
 		"")
-			if exists $name; then
+			if exists "$name"; then
 				write "service:${name} is installed."
 			else
 				write "service:${name} is not installed."
 			fi
 		;;
 		"running")
-			if running $name; then
+			if running "$name"; then
 				write "service:${name} is running"
 					else
 						write "service:${name} is not running"
@@ -186,7 +187,11 @@ function service_apply {
 		;;
 		"version")
 			local version="${name}"".version"
-			function.exists $version && version="$( ${version} )" && write "service:${name} version is ${version}." || write "Can't get service:${name} version."
+			if function_exists "$version" && version="$( ${version} )"; then
+				write "service:${name} version is ${version}."
+			else
+				write "Can't get service:${name} version."
+			fi
 		;;
 		"name")
 			write "${name}"
@@ -208,18 +213,18 @@ function main {
 	program="$1"
 	service="$1"
 	action="$2"
-	for pragment in ${@:2}; do
+	for pragment in "${@:2}"; do
 		program+=".$pragment"
 	done
 
-	if function_exists $program; then
+	if function_exists "$program"; then
 		$program
-	elif array_exists SERVICES[@] $service; then
-		service_apply $service $action
+	elif array_exists SERVICES[@] "$service"; then
+		service_apply "$service" "$action"
 	else
 		write "MODULE NOT FOUND."
 	fi
 }
 
-main $@
+main "$@"
 writeline 

@@ -34,9 +34,10 @@ function drawtext {
 # Align text
 # @param alignment - left, right, center, ..
 function align {
-	read text
+	read -r text
 	local distance=${#text}
-	local maxlength=$(tput cols)
+	local maxlength
+	maxlength="$(tput cols)"
 	case "${1}" in
 	left)
 		let distance=0
@@ -67,25 +68,25 @@ function writetitle {
 #----------------
 # Current path
 function path {
-	write "$( cd "$( dirname "$0" )" pwd )"
+	write "$( cd "$( dirname "$0" )" pwd || nul )"
 }
 #-----------------------
 # Check function existence
 # @param $name
 function function_exists {
-	type -t $1 | grep "function" >/dev/null
+	type -t "$1" | grep "function" >/dev/null
 }
 #-----------------------
 # Service existence
 # @param $name
 function exists {
-	sudo service --status-all 2>/dev/null | grep $1* >/dev/null
+	sudo service --status-all 2>/dev/null | grep "$1*" >/dev/null
 }
 #-----------------------
 # Service running
 # @param $name
 function running {
-	sudo pgrep $1 >/dev/null
+	sudo pgrep "$1" >/dev/null
 }
 #---------------------
 # Check if element exists in array
