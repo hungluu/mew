@@ -1,10 +1,18 @@
 # mew mew mew
 function meow {
-	write "\ (.=^ ェ^=) /" | align center
+	drawtext "-"
+	write " \ (.=^ ェ^=) / Hello " | align center
+	writeline
 	write "I am a silly cat ..." | align center
+	writeline
 	write "But I look good and happy" | align center
+	writeline
 	write "..." | align center
+	writeline
 	write "Never mind, just give me a hug (>w<)" | align center
+	drawtext "-"
+	write "'Software is like sex: it's better when it's free' - Linus Torvalds"
+	drawtext "-"
 }
 
 # Update
