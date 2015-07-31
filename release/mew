@@ -119,7 +119,11 @@ function array_regexp {
 } 
 # mew mew mew
 function meow {
-	writeline "\ (.=^ ェ^=) / I am a silly cat, but I look good and happy. Never mind, just give me a hug (>w<)"
+	write "\ (.=^ ェ^=) /" | align center
+	write "I am a silly cat ..." | align center
+	write "But I look good and happy" | align center
+	write "..." | align center
+	write "Never mind, just give me a hug (>w<)" | align center
 }
 
 # Update
