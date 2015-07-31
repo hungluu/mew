@@ -1,3 +1,8 @@
+# mew mew mew
+function mew {
+	writeline "\ (.=^ ェ^=) / I am a silly cat, but I look good and happy. Never mind, just give me a hug (>w<)"
+}
+
 # Update
 function update {
 	local url="https://raw.githubusercontent.com/madle/mew/master/release/mew"
