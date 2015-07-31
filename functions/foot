@@ -1,5 +1,5 @@
 # mew mew mew
-function mew {
+function meow {
 	drawline "-"
 	write " \ (.=^ ェ^=) / Hello " | align center
 	writeline
