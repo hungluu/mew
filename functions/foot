@@ -1,5 +1,5 @@
 # mew mew mew
-function mew {
+function meow {
 	writeline "\ (.=^ ェ^=) / I am a silly cat, but I look good and happy. Never mind, just give me a hug (>w<)"
 }
 
