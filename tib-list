@@ -1,3 +1,6 @@
-configs
-head
-foot
+; This is a comment, and will not be parsed
+; modules should be loaded here
+;
+;
+;
+; end of modules loading

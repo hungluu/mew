@@ -10,13 +10,13 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 # Write text
 # @param text
 function write {
-	printf $"$1"
+	printf "%s" "${@:1}"
 }
 #------------------
 # Write text within a line
 # @param text
 function writeline {
-	printf $"$1\n"
+	printf "%s\n" "${@:1}"
 }
 #-----------------------
 # Draw a horizontal line
@@ -229,4 +229,4 @@ function main {
 }
 
 main "$@"
-writeline 
+writeline
