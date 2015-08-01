@@ -16,7 +16,7 @@ function write {
 # Write text within a line
 # @param text
 function writeline {
-	printf "%s\n" "${@:1}"
+	printf "%s"'\n' "${@:1}"
 }
 #-----------------------
 # Draw a horizontal line
