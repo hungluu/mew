@@ -1,43 +1,46 @@
 @echo off
 set modulelist=functions
+set releasetemp=release\mew-temp
 set release=release\mew
 :: Detect if module directory exists
 if not exist %modulelist% goto nodir
-type nul > %release%
 :: Load configs and head file
-type %modulelist%\configs >> %release%
-echo. >> %release%
-type %modulelist%\head >> %release%
-echo. >> %release%
+del /f /q %releasetemp%
+del /f /q %release%
+type nul>%releasetemp%
+type nul>%release%
+type %modulelist%\configs >> %releasetemp%
+echo.>>%releasetemp%
+type %modulelist%\head >> %releasetemp%
+echo.>>%releasetemp%
 :: Load modules
-for /f %%a in (tib-list) do (
-	if not exist %modulelist%\%%a (
-		echo MODULE %%a NOT FOUND
+for /f %%m in (tib-list) do (
+	if not exist %modulelist%\%%m (
+		echo MODULE %%m NOT FOUND
 		goto fail
 	)
 
-	(
-		echo COPYING MODULE %%a TO RELEASE FILE
-		:: Copy module file to final release
-		type %modulelist%\%%a >> %release%
+	echo COPYING MODULE %%m TO releasetemp FILE
+		:: Copy module file to final releasetemp
+		type %modulelist%\%%m>>%releasetemp%
 		:: Add end of line
-		echo. >> %release%
-	)
+		echo.>>%releasetemp%
 )
 :: Load foot
-type %modulelist%\foot >> %release%
+type %modulelist%\foot>>%releasetemp%
 goto success
 :success
 :: Auto closing on success
 echo SUCCESSFULLY BUILT
 goto end
 :fail
-type nul > %release%
+del /f /q %releasetemp%
+del /f /q %release%
 pause
 goto end
 :nodir
 echo NO MODULE DIRECTORY FOUND.
-pause
-goto end
+goto fail
 :end
+pause
 exit
